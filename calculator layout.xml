@@ -1,0 +1,38 @@
+<Text
+    position="0 80 -28"
+    id="title"
+    color="White"
+    fontSize="36"
+    outline="Black"
+    shadow="Black"
+>Roll Calculator
+</Text>
+
+<Text
+    position="0 24 -28"
+    id="status"
+    color="Red"
+    fontSize="48"
+    outline="Black"
+    shadow="Black"
+>Disabled
+</Text>
+
+<ToggleButton
+    position="0 -50 -27"
+    id="activeToggle"
+    width="150"
+    height="75"
+    onValueChanged="toggled"
+    fontSize="18"
+    textColor="Black"
+>Click to enable or disable
+</ToggleButton>
+
+<Text
+    position="-55 -90 0"
+    color="White"
+    fontSize="14"
+    rotation="180 0 180"
+>Created by Turbobear
+</Text>
