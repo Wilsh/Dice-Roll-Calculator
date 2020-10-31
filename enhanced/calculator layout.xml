@@ -1,0 +1,48 @@
+<Text
+    position="0 105 -28"
+    id="title"
+    color="White"
+    fontSize="36"
+    outline="Black"
+    shadow="Black"
+>Roll Calculator
+</Text>
+
+<Toggle
+    position="0 20 -27"
+    id="activeToggle"
+    width="300"
+    height="150"
+    onValueChanged="toggled"
+    fontSize="18"
+    textColor="White"
+>Click to activate
+</Toggle>
+
+<Text
+    position="-50 -100 -27"
+    color="White"
+    fontSize="18"
+>Add modifier to next roll:
+</Text>
+
+<InputField
+    position="105 -100 -27"
+    onEndEdit="modifierAdded"
+    id="modifierInput"
+    placeholder="Number"
+    characterValidation="Integer"
+    fontstyle="Bold"
+    characterLimit="14"
+    width="80"
+    tooltip="Can be a negative number"
+>
+</InputField>
+
+<Text
+    position="-70 -100 0"
+    color="White"
+    fontSize="14"
+    rotation="180 0 180"
+>Created by Turbobear
+</Text>
