@@ -13,7 +13,17 @@ function populateTables()
     end
 end
 
-function onload()
+function onSave()
+    return JSON.encode({activated = isActive})
+end
+
+function onload(scriptState)
+    local state = JSON.decode(scriptState)
+    if(state.activated) then
+        isActive = true
+        self.UI.setAttributes("status", {["text"]="Enabled", ["color"]="Green"})
+    end
+
     populateTables()
     --Track the results of each die rolled by a specific player
     function onObjectRandomize(obj, color)
