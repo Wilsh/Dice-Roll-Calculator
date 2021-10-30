@@ -57,7 +57,7 @@ end
 function endRoll()
     if(#isWatched == 0) then
         --Organize type of dice in tallyDice
-        local tallyString = ""
+        local tallyString, resultString = "", ""
         table.sort(trackDice, function(a,b) return a>b end) --Decreasing order
         local current, count = 0, 0
         for k, v in ipairs(trackDice) do
@@ -70,17 +70,27 @@ function endRoll()
                 current = v
                 count = 1
             end
+            resultString = resultString .. tostring(v[2]) .. " + "
         end
         tallyString = tallyString .. count .. "d" .. current
+        resultString = string.sub(resultString, 1, string.len(resultString) - 3) --remove trailing " + "
         --Display roll results
+        local message = player.steam_name .. " rolls " .. tallyString
         if(rollModifier ~= nil and rollModifier ~= 0) then
-            printToAll(player.steam_name .. " rolls " .. tallyString .. " + " ..
-                    rollModifier .. " = " .. rollTotal + rollModifier, player.color)
+            if #trackDice == 1 then
+                message = message .. " + " .. rollModifier .. " = " .. rollTotal + rollModifier
+            else
+                message = message .. " + " .. rollModifier .. ": " .. resultString .. " + " .. rollModifier .. " = " .. rollTotal + rollModifier
+            end
             rollModifier = nil
         else
-            printToAll(player.steam_name .. " rolls " .. tallyString .. " = " ..
-                    rollTotal, player.color)
+            if #trackDice == 1 then
+                message = message .. " = " .. rollTotal
+            else
+                message = message .. ": " .. resultString .. " = " .. rollTotal
+            end
         end
+        printToAll(message, player.color)
         if(modifierId ~= '') then
             self.UI.setAttribute(modifierId, "text", '')
         end
