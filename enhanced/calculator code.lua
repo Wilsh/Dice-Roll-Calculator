@@ -1,10 +1,23 @@
 local isActive = false
-local player
+local player, uiID
 local isWatched, trackDice = {}, {}
 local rollTotal = 0
 local modifierId, rollModifier = ''
 
-function onload()
+function onSave()
+    return JSON.encode({activated = isActive, activeFor = player, ui = uiID})
+end
+
+function onload(scriptState)
+    local state = JSON.decode(scriptState)
+    if(state.activated) then
+        isActive = true
+        player = state.activeFor
+        uiID = state.ui
+        self.UI.setAttributes(uiID, {["text"]="Active for " .. player.steam_name,
+                ["textColor"]=player.color})
+    end
+
     --Track the results of each die rolled by a specific player
     function onObjectRandomize(obj, color)
         if(not isActive or player.color ~= color) then return end
@@ -102,6 +115,7 @@ end
 --Enable or disable object function
 --Activated by toggle element
 function toggled(toggledBy, toggledOn, id)
+    uiID = id
     if(toggledOn == 'True') then
         player = toggledBy
         isActive = true
