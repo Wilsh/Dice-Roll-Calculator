@@ -1,4 +1,5 @@
 local isActive = false
+local uiID
 local isWatched = {}
 local trackDice = {}
 local rollTotal = {}
@@ -14,14 +15,16 @@ function populateTables()
 end
 
 function onSave()
-    return JSON.encode({activated = isActive})
+    return JSON.encode({activated = isActive, ui = uiID})
 end
 
 function onload(scriptState)
     local state = JSON.decode(scriptState)
     if(state.activated) then
         isActive = true
+        uiID = state.ui
         self.UI.setAttributes("status", {["text"]="Enabled", ["color"]="Green"})
+        self.UI.setAttribute(uiID, "text", "Click to disable")
     end
 
     populateTables()
@@ -102,13 +105,16 @@ end
 --Enable or disable object function
 --Activated by toggle element
 function toggled(toggledBy, toggledOn, id)
+    uiID = id
     if(toggledOn == 'True') then
         isActive = true
         self.UI.setAttributes("status", {["text"]="Enabled", ["color"]="Green"})
+        self.UI.setAttribute(uiID, "text", "Click to disable")
         printToAll("Dice roll calculator enabled by " .. toggledBy.steam_name, {1,1,1})
     else
         isActive = false
         self.UI.setAttributes("status", {["text"]="Disabled", ["color"]="Red"})
+        self.UI.setAttribute(uiID, "text", "Click to enable")
         printToAll("Dice roll calculator disabled by " .. toggledBy.steam_name, {1,1,1})
     end
 end
