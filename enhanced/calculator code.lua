@@ -10,7 +10,7 @@ end
 
 function onload(scriptState)
     local state = JSON.decode(scriptState)
-    if(state.activated) then
+    if(state ~= nil and state.activated) then
         isActive = true
         player = state.activeFor
         uiID = state.ui

@@ -20,7 +20,7 @@ end
 
 function onload(scriptState)
     local state = JSON.decode(scriptState)
-    if(state.activated) then
+    if(state ~= nil and state.activated) then
         isActive = true
         uiID = state.ui
         self.UI.setAttributes("status", {["text"]="Enabled", ["color"]="Green"})
