@@ -24,7 +24,7 @@ function onload(scriptState)
         isActive = true
         uiID = state.ui
         self.UI.setAttributes("status", {["text"]="Enabled", ["color"]="Green"})
-        self.UI.setAttribute(uiID, "text", "Click to disable")
+        self.UI.setAttributes(uiID, {["text"]="Click to disable", ["isOn"]=true})
     end
 
     populateTables()
