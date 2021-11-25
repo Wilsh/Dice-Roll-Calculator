@@ -30,16 +30,12 @@ function onload(scriptState)
     populateTables()
     --Track the results of each die rolled by a specific player
     function onObjectRandomize(obj, color)
-        if not isActive then return end
-        --Check object attributes to ensure only dice are evaluated
-        local function isDie() return obj.tag == "Dice" end
-        if(obj.getValue() == nil and isDie()) then return end
+        if(not isActive or obj.getValue() == nil) then return end
         --Ignore non-Dice objects and non-numerical dice
-        if(not isDie() or tonumber(obj.getRotationValue()) == nil) then return end
-
-        local id = obj.getGUID()
+        if(obj.tag ~= "Dice" or tonumber(obj.getRotationValue()) == nil) then return end
         --Prevent adding the same object to the isWatched table more than once
         --(A die can be randomized multiple times before coming to rest)
+        local id = obj.getGUID()
         local exists = false
         for k, v in pairs(isWatched[color]) do
             if(v == id) then
